@@ -10,8 +10,75 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.adminportatil.cebanctortillas.Registro">
 
+
+    <TextView
+        android:text="@string/txtNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:id="@+id/txtNombre"
+        android:textSize="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="black"/>
+
+    <TextView
+        android:text="@string/txtDireccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:id="@+id/txtDireccion"
+        android:textSize="20dp"
+        android:layout_below="@+id/txtNombre"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="black"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_marginTop="34dp"
+        android:id="@+id/txtTelefono"
+        android:text="@string/txtTelefono"
+        android:textSize="20dp"
+        android:layout_below="@+id/txtDireccion"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="black"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="@string/edtNombre"
+        android:ems="10"
+        android:id="@+id/edtNombre"
+        android:layout_alignBaseline="@+id/txtNombre"
+        android:layout_alignBottom="@+id/txtNombre"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="@string/edtDireccion"
+        android:ems="10"
+        android:id="@+id/edtDireccion"
+        android:layout_alignBaseline="@+id/txtDireccion"
+        android:layout_alignBottom="@+id/txtDireccion"
+        android:layout_toRightOf="@+id/txtDireccion"
+        android:layout_toEndOf="@+id/txtDireccion" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="@string/edtTelefono"
+        android:ems="10"
+        android:id="@+id/edtTelefono"
+        android:layout_alignBaseline="@+id/txtTelefono"
+        android:layout_alignBottom="@+id/txtTelefono"
+        android:layout_toRightOf="@+id/txtTelefono"
+        android:layout_toEndOf="@+id/txtTelefono" />
 </RelativeLayout>

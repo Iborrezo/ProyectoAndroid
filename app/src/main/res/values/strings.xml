@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Cebanc Tortillas</string>
+    <string name="txtNombre">Nombre:</string>
+    <string name="txtDireccion">Dirección:</string>
+    <string name="txtTelefono">Teléfono</string>
+    <string name="edtNombre">Introduzca su nombre</string>
+    <string name="edtTelefono">Introduzca su telefono</string>
+    <string name="edtDireccion">Introduzca su dirección</string>
 </resources>
