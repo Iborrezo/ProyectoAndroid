@@ -21,7 +21,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textColor="black"/>
+        />
 
     <TextView
         android:text="@string/txtDireccion"
@@ -33,7 +33,7 @@
         android:layout_below="@+id/txtNombre"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textColor="black"/>
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,8 +44,10 @@
         android:textSize="20dp"
         android:layout_below="@+id/txtDireccion"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textColor="black"/>
+        android:layout_alignParentStart="true"/>
+
+
+
 
     <EditText
         android:layout_width="wrap_content"
@@ -81,4 +83,28 @@
         android:layout_alignBottom="@+id/txtTelefono"
         android:layout_toRightOf="@+id/txtTelefono"
         android:layout_toEndOf="@+id/txtTelefono" />
+
+    <Button
+        android:text="@string/btnSiguiente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtTelefono"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="21dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/btnSiguiente" />
+
+    <Button
+        android:text="@string/btnSalir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSalir"
+        android:layout_alignBaseline="@+id/btnSiguiente"
+        android:layout_alignBottom="@+id/btnSiguiente"
+        android:layout_alignRight="@+id/edtNombre"
+        android:layout_alignEnd="@+id/edtNombre"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp" />
 </RelativeLayout>
