@@ -15,7 +15,7 @@ public class FirstMapActivity extends AppCompatActivity implements OnMapReadyCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inicio);
 
-        mFirstMapFragment = FirstMapFragment.newInstance();
+        mFirstMapFragment = FirstMapFragment.newInstance(k);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.map_container, mFirstMapFragment)
