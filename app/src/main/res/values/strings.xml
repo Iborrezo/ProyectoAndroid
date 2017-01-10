@@ -11,6 +11,10 @@
     <string name="btnLlamar">Llamar</string>
     <string name="btnInfo">Información</string>
     <string name="btnInicio">Inicio</string>
+    <string name="btnAñadir">Añadir</string>
+    <string name="btnAceptar">Aceptar</string>
+    <string name="btnCancelar">Cancelar</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

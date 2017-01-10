@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,22 +8,20 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner1"
+        android:id="@+id/spTamaño"
+        android:layout_weight="1" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:clipToPadding="false"
-        android:layout_marginTop="20dp" />
+        android:id="@+id/spHuevo" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner2"
-        android:layout_weight="1" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner3"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:id="@+id/spTipo" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -30,19 +29,57 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <Button
-            android:text="Button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/button3"
-            android:layout_weight="1" />
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp">
 
-        <Button
-            android:text="Button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/button2"
-            android:layout_weight="1" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/etCantidad" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <Button
+                    android:text="@string/btnAñadir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/btnAñadir" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <Button
+                    android:text="@string/btnSalir"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/btnSalir" />
+
+                <Button
+                    android:text="@string/btnSiguiente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/btnSiguiente" />
+            </TableRow>
+
+        </TableLayout>
+
     </LinearLayout>
 
 </LinearLayout>
