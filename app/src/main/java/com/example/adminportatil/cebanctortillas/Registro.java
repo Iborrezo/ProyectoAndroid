@@ -34,11 +34,12 @@ public class Registro extends AppCompatActivity {
                     nombre.setError("No ha introducido el nombre");
                 }else if (direccion.getText().toString().equals("")) {
                     direccion.setError("No ha introducido la direccion");
-                }else if (telefono.getText().toString().equals("")){
+                }else if (telefono.getText().toString().equals("")) {
                     telefono.setError("No ha introducido la direccion");
+                } else{
+                        recogerDatos(null);
                 }
 
-                recogerDatos(null);
             }
         });
 

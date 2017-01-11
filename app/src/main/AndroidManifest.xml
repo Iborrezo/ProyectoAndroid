@@ -17,13 +17,18 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC9mBKYvUlOtYP1uPWvArYfFXUxg92JTVg" />
 
-        <activity android:name=".FirstMapActivity"
-            android:label="@string/app_name"/>
+        <activity android:name=".FirstMapActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
 
         <activity android:name=".Registro">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.ASSIST" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
         </activity>
 
