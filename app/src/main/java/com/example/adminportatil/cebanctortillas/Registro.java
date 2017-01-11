@@ -52,7 +52,7 @@ public class Registro extends AppCompatActivity {
 
     //Recogiendo los datos de la pestaña REGISTRO para lkuego poder imprimir
     public void recogerDatos(View view){
-        Intent registro=new Intent(this, /*3 pantalla.class*/);
+        Intent registro=new Intent(this, Pedido.class);
         registro.putExtra("nombre", nombre.getText().toString());
         registro.putExtra("direccion", direccion.getText().toString());
         registro.putExtra("telefono", telefono.getText().toString());
