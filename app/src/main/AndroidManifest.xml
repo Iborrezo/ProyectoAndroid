@@ -17,6 +17,9 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC9mBKYvUlOtYP1uPWvArYfFXUxg92JTVg" />
 
+        <activity android:name=".FirstMapActivity"
+            android:label="@string/app_name"/>
+
         <activity android:name=".Registro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,8 +27,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".FirstMapActivity"
-            android:label="@string/app_name"/>
+
 
         <activity android:name=".Pedido">
             <intent-filter>

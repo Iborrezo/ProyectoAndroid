@@ -32,11 +32,11 @@ public class Pedido extends Activity{
         btnSiguiente = (Button)findViewById(R.id.btnSiguiente);
         edtCantidad = (EditText)findViewById(R.id.edtCantidad);
 
-        String [] tamaño ={"Individual", "Familiar"};
+        String [] tamaño ={"Individual :5€", "Familiar :9€"};
         ArrayAdapter<String>adapTamaño= new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, tamaño);
-        String [] tipo ={"Patata", "Verduras", "Bacalao", "Jamón Ibérico", "Queso Idiazabal", "Hongos"};
+        String [] tipo ={"Patata :3€", "Verduras :2€", "Bacalao :2.5€", "Jamón Ibérico :4€", "Queso Idiazabal :3.5€", "Hongos :3€"};
         ArrayAdapter<String>adapTipo= new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, tipo);
-        String [] huevo ={"Granja", "Campero", "Ecológico"};
+        String [] huevo ={"Granja :1€", "Campero :2€", "Ecológico :3€"};
         ArrayAdapter<String>adapHuevo= new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, huevo);
 
         spTamaño.setAdapter(adapTamaño);
@@ -53,8 +53,18 @@ public class Pedido extends Activity{
 
     }
     private void Añadir(){
-        String Tipo =  spTipo.getSelectedItem().toString();
+        String tipo =  spTipo.getSelectedItem().toString();
+        String tamaño = spTamaño.getSelectedItem().toString();
+        String huevo = spHuevo.getSelectedItem().toString();
+        int cantidad = Integer.parseInt(edtCantidad.getText().toString());
+        int precio = calcularPrecio(tipo, tamaño, huevo, cantidad);
 
+    }
+    private int calcularPrecio(String tipo, String tamaño, String huevo, int cantidad){
+        int precio;
+        precio=2;
+
+        return precio;
     }
 
 
