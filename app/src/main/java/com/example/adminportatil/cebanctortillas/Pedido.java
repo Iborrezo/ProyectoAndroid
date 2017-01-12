@@ -11,9 +11,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 
-public class Pedido extends Activity  {
+public class Pedido extends Activity {
     private Spinner spTamaño;
     private Spinner spTipo;
     private Spinner spHuevo;
@@ -41,7 +42,7 @@ public class Pedido extends Activity  {
         String nombre = extra.getString("nombre");
         String apellido = extra.getString("direccion");
         String telefono = extra.getString("telefono");
-        final String infPers = nombre+","+apellido+","+telefono;
+        final String infPers = nombre + "," + apellido + "," + telefono;
 
         spTamaño = (Spinner) findViewById(R.id.spTamaño);
         spTipo = (Spinner) findViewById(R.id.spTipo);
@@ -131,7 +132,7 @@ public class Pedido extends Activity  {
 
     private void next(String infPers) {
         Intent i = new Intent(this, Bebidas.class);
-       // i.putExtra("ArrayProducto", listaCompra);
+        i.putExtra("ArrayProducto", listaCompra);
         i.putExtra("infPers", infPers);
         startActivity(i);
 
