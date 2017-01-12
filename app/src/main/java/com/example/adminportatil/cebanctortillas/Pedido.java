@@ -56,6 +56,7 @@ public class Pedido extends Activity {
         txtTipo = (TextView) findViewById(R.id.txtTipo);
         txtHuevo = (TextView) findViewById(R.id.txtHuevo);
         txtCantidadTot = (TextView) findViewById(R.id.txtCantidadTot);
+
         String[] tamaño = {"Individual", "Familiar"};
         ArrayAdapter<String> adapTamaño = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tamaño);
         String[] tipo = {"Patata", "Verduras", "Bacalao", "Jamón Ibérico", "Queso Idiazabal", "Hongos"};

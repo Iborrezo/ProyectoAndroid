@@ -27,11 +27,12 @@
                 android:ems="10"
                 android:id="@+id/edtCantidad2" />
 
-            <Button
-                android:text="@string/btnAñadir"
+            <TextView
+                android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnAñadir2" />
+                android:id="@+id/txtPrecio" />
+
         </TableRow>
 
         <TableRow
@@ -39,18 +40,21 @@
             android:layout_height="match_parent" >
 
             <Button
+                android:text="@string/btnAñadir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnAñadir2" />
+
+            <Button
                 android:text="@string/btnSalir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:id="@+id/btnSalir2" />
 
             <Button
                 android:text="@string/btnSiguiente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:elevation="1dp"
                 android:id="@+id/btnSiguiente3" />
         </TableRow>
 
