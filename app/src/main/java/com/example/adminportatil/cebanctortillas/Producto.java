@@ -1,8 +1,9 @@
 package com.example.adminportatil.cebanctortillas;
 
 
+import java.io.Serializable;
 
-public class Producto {
+public class Producto implements Serializable{
     private double precio;
     private int cantidad;
     private String descripcion;

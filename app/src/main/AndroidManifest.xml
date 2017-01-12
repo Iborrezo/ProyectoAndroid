@@ -35,10 +35,9 @@
 
 
         <activity android:name=".Pedido">
-            <intent-filter>
-                <action android:name="android.intent.action.ASSIST" />
-                <category android:name="android.intent.category.ALTERNATIVE" />
-            </intent-filter>
+        </activity>
+
+        <activity android:name=".Bebidas">
         </activity>
 
     </application>

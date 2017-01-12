@@ -2,6 +2,7 @@ package com.example.adminportatil.cebanctortillas;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -10,10 +11,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
-public class Pedido extends Activity {
+public class Pedido extends Activity  {
     private Spinner spTamaño;
     private Spinner spTipo;
     private Spinner spHuevo;
@@ -39,10 +39,9 @@ public class Pedido extends Activity {
 
         Bundle extra = getIntent().getExtras();
         String nombre = extra.getString("nombre");
-        String apellido = extra.getString("apellido");
+        String apellido = extra.getString("direccion");
         String telefono = extra.getString("telefono");
-        int telf = Integer.parseInt(telefono);
-
+        final String infPers = nombre+","+apellido+","+telefono;
 
         spTamaño = (Spinner) findViewById(R.id.spTamaño);
         spTipo = (Spinner) findViewById(R.id.spTipo);
@@ -87,7 +86,7 @@ public class Pedido extends Activity {
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                next();
+                next(infPers);
             }
         });
 
@@ -130,7 +129,12 @@ public class Pedido extends Activity {
 
     }
 
-    private void next() {
+    private void next(String infPers) {
+        Intent i = new Intent(this, Bebidas.class);
+       // i.putExtra("ArrayProducto", listaCompra);
+        i.putExtra("infPers", infPers);
+        startActivity(i);
+
 
     }
 
