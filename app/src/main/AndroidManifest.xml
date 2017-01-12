@@ -37,8 +37,8 @@
         <activity android:name=".Pedido">
         </activity>
 
-        <activity android:name=".Bebidas">
-        </activity>
+        <activity android:name=".Bebidas"/>
+        <activity android:name=".Resumen"/>
 
     </application>
 
