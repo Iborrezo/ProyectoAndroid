@@ -13,7 +13,10 @@ public class Producto implements Serializable{
         this.cantidad=cantidad;
         this.descripcion= descripcion;
     }
-    public String getDetails(){
-        return precio+cantidad+descripcion;
+    public String getDescripcion(){
+        return descripcion;
+    }
+    public int getCantidad(){
+        return cantidad;
     }
 }
