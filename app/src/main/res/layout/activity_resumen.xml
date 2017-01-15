@@ -7,26 +7,26 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp">
 
         <ListView
 
-            android:layout_weight="1"
             android:id="@+id/lvResultadoDesc"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="2dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:layout_width="300dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_height="300dp"
+            android:textSize="8sp"
+            android:layout_weight="1" />
 
 
         <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="300dp"
             android:layout_weight="1"
             android:id="@+id/lvlResultadoCant"
-            android:touchscreenBlocksFocus="false">
+            android:touchscreenBlocksFocus="false"
+            android:layout_height="300dp">
 
         </ListView>
     </LinearLayout>
@@ -34,8 +34,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
 
         <Button
             android:text="@string/btnCancelar"
@@ -48,6 +48,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btnAceptar" />
+
+    </LinearLayout>
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:id="@+id/txtResultadoo"
+        android:layout_height="50dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <Spinner
+            android:layout_height="wrap_content"
+            android:id="@+id/spModif"
+            android:layout_width="150dp"
+            android:layout_marginTop="7dp" />
+
+        <Button
+            android:text="@string/btnMenos"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnMenos"
+            android:layout_width="60dp" />
+
+        <Button
+            android:text="@string/btnQuitar"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnQuitar"
+            android:layout_width="60dp" />
+
+        <Button
+            android:text="@string/btnMas"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnMas" />
 
     </LinearLayout>
 

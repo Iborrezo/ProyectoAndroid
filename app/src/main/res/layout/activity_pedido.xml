@@ -104,13 +104,6 @@
                 android:layout_height="match_parent" >
 
                 <Button
-                    android:text="@string/btnCalcular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btnCalcular"
-                    android:elevation="1dp" />
-
-                <Button
                     android:text="@string/btnAñadir"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -124,17 +117,17 @@
 
                 <Button
                     android:text="@string/btnSalir"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:id="@+id/btnSalir" />
+                    android:id="@+id/btnSalir"
+                    android:layout_width="30px" />
 
                 <Button
                     android:text="@string/btnSiguiente"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:id="@+id/btnSiguiente" />
+                    android:id="@+id/btnSiguiente"
+                    android:layout_width="300px" />
             </TableRow>
 
         </TableLayout>

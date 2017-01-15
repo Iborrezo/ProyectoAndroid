@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,16 +22,16 @@ public class Pedido extends Activity {
     private Button btnAñadir;
     private Button btnSalir;
     private Button btnSiguiente;
-    private Button btnCalcular;
     private EditText edtCantidad;
     private TextView txtTamaño;
     private TextView txtTipo;
     private TextView txtHuevo;
     private TextView txtCantidadTot;
+    private Toast toast1;
 
-    final int prTamaño[] = {5, 9};
-    final double prTipo[] = {3, 2, 2.5, 4, 3.5, 3};
-    final int prHuevo[] = {1, 2, 3};
+    final int prTamaño[] = {0, 5, 9};
+    final double prTipo[] = {0, 3, 2, 2.5, 4, 3.5, 3};
+    final int prHuevo[] = {0, 1, 2, 3};
 
     ArrayList<Producto> listaCompra = new ArrayList<Producto>();
 
@@ -50,18 +51,17 @@ public class Pedido extends Activity {
         btnAñadir = (Button) findViewById(R.id.btnAñadir);
         btnSalir = (Button) findViewById(R.id.btnSalir);
         btnSiguiente = (Button) findViewById(R.id.btnSiguiente);
-        btnCalcular = (Button) findViewById(R.id.btnCalcular);
         edtCantidad = (EditText) findViewById(R.id.edtCantidad);
         txtTamaño = (TextView) findViewById(R.id.txtTamaño);
         txtTipo = (TextView) findViewById(R.id.txtTipo);
         txtHuevo = (TextView) findViewById(R.id.txtHuevo);
         txtCantidadTot = (TextView) findViewById(R.id.txtCantidadTot);
 
-        String[] tamaño = {"Individual", "Familiar"};
+        String[] tamaño = {"Seleccione un tamaño", "Individual", "Familiar"};
         ArrayAdapter<String> adapTamaño = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tamaño);
-        String[] tipo = {"Patata", "Verduras", "Bacalao", "Jamón Ibérico", "Queso Idiazabal", "Hongos"};
+        String[] tipo = {"Seleccione un tipo", "Patata", "Verduras", "Bacalao", "Jamón Ibérico", "Queso Idiazabal", "Hongos"};
         ArrayAdapter<String> adapTipo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipo);
-        String[] huevo = {"Granja", "Campero", "Ecológico"};
+        String[] huevo = {"Seleccione un tipo de huevo", "Granja", "Campero", "Ecológico"};
         ArrayAdapter<String> adapHuevo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, huevo);
 
 
@@ -77,13 +77,6 @@ public class Pedido extends Activity {
             }
         });
 
-        btnCalcular.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int cantidad = Integer.parseInt(edtCantidad.getText().toString());
-                ActualizarPrecio(cantidad);
-            }
-        });
 
         btnSiguiente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,25 +84,69 @@ public class Pedido extends Activity {
                 next(infPers);
             }
         });
+        spTipo.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(
+                            AdapterView<?> parent, View view, int position, long id) {
+                        if(edtCantidad.getText().equals("")){
+                            edtCantidad.setText("1");
+                            ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
+                        }
+                    }
+
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+        spHuevo.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(
+                            AdapterView<?> parent, View view, int position, long id) {
+                        if(edtCantidad.getText().equals("")){
+                            edtCantidad.setText("1");
+                            ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
+                        }
+                    }
+
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+        spTamaño.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    public void onItemSelected(
+                            AdapterView<?> parent, View view, int position, long id) {
+                        if(edtCantidad.getText().equals("")){
+                         edtCantidad.setText("1");
+                            ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
+                        }
+                    }
+
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
 
 
     }
 
     private void Añadir() {
-        String tipo = spTipo.getSelectedItem().toString();
-        String tamaño = spTamaño.getSelectedItem().toString();
-        String huevo = spHuevo.getSelectedItem().toString();
-        int cantidad = Integer.parseInt(edtCantidad.getText().toString());
-        ActualizarPrecio(cantidad);
-        double precio;
-        String descripcion;
-        precio = CalcularPrecio();
-        descripcion = (tipo + "," + tamaño + "," + huevo);
-        listaCompra.add(new Producto(precio, cantidad, descripcion));
-        Toast toast1;
-        toast1 = Toast.makeText(getApplicationContext(), "Se ha añadido " + cantidad + " tortilla/s de: " + tipo + " con huevos '" + huevo + "' de tamaño: " + tamaño + ".", Toast.LENGTH_SHORT);
-        toast1.show();
+        if (validarDatos()) {
+            String tipo = spTipo.getSelectedItem().toString();
+            String tamaño = spTamaño.getSelectedItem().toString();
+            String huevo = spHuevo.getSelectedItem().toString();
+            int cantidad = Integer.parseInt(edtCantidad.getText().toString());
+            ActualizarPrecio(cantidad);
+            double precio;
+            String descripcion;
+            precio = CalcularPrecio();
+            descripcion = (tipo + "," + tamaño + "," + huevo);
+            listaCompra.add(new Producto(precio, cantidad, descripcion));
 
+            toast1 = Toast.makeText(getApplicationContext(), "Se ha añadido " + cantidad + " tortilla/s de: " + tipo + " con huevos '" + huevo + "' de tamaño: " + tamaño + ".", Toast.LENGTH_SHORT);
+            toast1.show();
+
+        }
     }
 
     private void ActualizarPrecio(int cantidad) {
@@ -140,5 +177,31 @@ public class Pedido extends Activity {
 
     }
 
-
+    private boolean validarDatos() {
+        if(spTamaño.getSelectedItemPosition()>0){
+            if(spHuevo.getSelectedItemPosition()>0){
+                if (spTipo.getSelectedItemPosition()>0){
+                    if (edtCantidad.getText().toString().equals("") || Integer.parseInt(edtCantidad.getText().toString())==0){
+                        toast1 = Toast.makeText(getApplicationContext(), "La cantidad tiene que ser superior a 0", Toast.LENGTH_SHORT);
+                        toast1.show();
+                        return false;
+                    }else{
+                        return true;
+                    }
+                }else{
+                    toast1 = Toast.makeText(getApplicationContext(), "Seleccione un ingrediente principal", Toast.LENGTH_SHORT);
+                    toast1.show();
+                    return false;
+                }
+            }else{
+                toast1 = Toast.makeText(getApplicationContext(), "Seleccione un tipo de huevo", Toast.LENGTH_SHORT);
+                toast1.show();
+                return false;
+            }
+        }else{
+            toast1 = Toast.makeText(getApplicationContext(), "Seleccione un tamaño", Toast.LENGTH_SHORT);
+            toast1.show();
+            return false;
+        }
+    }
 }

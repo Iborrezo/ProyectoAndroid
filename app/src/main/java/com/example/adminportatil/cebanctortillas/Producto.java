@@ -19,4 +19,13 @@ public class Producto implements Serializable{
     public int getCantidad(){
         return cantidad;
     }
+    public void sumarCantidad(){
+        cantidad++;
+    }
+    public void restarCantidad(){
+        cantidad--;
+    }
+    public double getPrecio(){
+        return precio;
+    }
 }

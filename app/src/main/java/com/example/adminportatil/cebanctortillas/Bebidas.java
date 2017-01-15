@@ -26,6 +26,7 @@ public class Bebidas extends Activity {
     private Button btnSiguiente;
     private TextView txtPrecio;
     ArrayList<Producto> listaCompra;
+    private Toast toast1;
 
     final double prBebidas[] = {0, 2, 1.75, 1.75, 2.20, 2.50, 1};
 
@@ -45,6 +46,7 @@ public class Bebidas extends Activity {
         btnSiguiente = (Button) findViewById(R.id.btnSiguiente3);
         btnSiguiente = (Button) findViewById(R.id.btnSiguiente3);
         txtPrecio = (TextView) findViewById(R.id.txtPrecio);
+        edtCantidad.setText("0");
 
         String[] bebidas = {"Seleccione una Bebida", "Cocacola", "Kas Limon", "Kas Naranja", "Nestea", "Cerveza", "Agua"};
         ArrayAdapter<String> adapBebidas = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, bebidas);
@@ -55,9 +57,7 @@ public class Bebidas extends Activity {
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(
                             AdapterView<?> parent, View view, int position, long id) {
-                        txtPrecio.setText((prBebidas[position]) + "€ unidad");
-
-
+                        txtPrecio.setText((prBebidas[position]) + "€ unidad / ");
                     }
 
                     public void onNothingSelected(AdapterView<?> parent) {
@@ -82,16 +82,30 @@ public class Bebidas extends Activity {
     }
 
     private void añadir() {
-        String descripcion;
-        int cantidad;
-        double precio;
-        descripcion = spBebida.getSelectedItem().toString();
-        precio = prBebidas[spBebida.getSelectedItemPosition()];
-        cantidad = Integer.parseInt(edtCantidad.getText().toString());
-        listaCompra.add(new Producto(precio, cantidad, descripcion));
-        Toast toast1;
-        toast1 = Toast.makeText(getApplicationContext(), "Se ha añadido " + cantidad + " " + descripcion + "/s .", Toast.LENGTH_SHORT);
-        toast1.show();
+        if(spBebida.getSelectedItemPosition()>0){
+            if(edtCantidad.getText().toString().equals("") || Integer.parseInt(edtCantidad.getText().toString()) == 0){
+                toast1 = Toast.makeText(getApplicationContext(), "La cantidad tiene que ser superior a 0", Toast.LENGTH_SHORT);
+                toast1.show();
+        }
+             else{
+                String descripcion;
+                int cantidad;
+                double precio;
+                descripcion = spBebida.getSelectedItem().toString();
+                precio = prBebidas[spBebida.getSelectedItemPosition()];
+                cantidad = Integer.parseInt(edtCantidad.getText().toString());
+                listaCompra.add(new Producto(precio, cantidad, descripcion));
+                toast1 = Toast.makeText(getApplicationContext(), "Se ha añadido " + cantidad + " " + descripcion + "/s .", Toast.LENGTH_SHORT);
+                toast1.show();
+            }
+
+
+        }else{
+            toast1 = Toast.makeText(getApplicationContext(), "Seleccione un tipo de bebida", Toast.LENGTH_SHORT);
+            toast1.show();
+
+        }
+
 
     }
     private void next(String infPers){
