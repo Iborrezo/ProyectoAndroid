@@ -28,6 +28,8 @@ public class Pedido extends Activity {
     private TextView txtHuevo;
     private TextView txtCantidadTot;
     private Toast toast1;
+    private boolean vuelta = false;
+    private String infPers;
 
     final int prTamaño[] = {0, 5, 9};
     final double prTipo[] = {0, 3, 2, 2.5, 4, 3.5, 3};
@@ -38,12 +40,25 @@ public class Pedido extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedido);
-
+        String telefono;
+        String apellido;
+        String nombre;
         Bundle extra = getIntent().getExtras();
-        String nombre = extra.getString("nombre");
-        String apellido = extra.getString("direccion");
-        String telefono = extra.getString("telefono");
-        final String infPers = nombre + "," + apellido + "," + telefono;
+        vuelta = extra.getBoolean("vuelta");
+
+        if (vuelta==false){
+
+            nombre = extra.getString("nombre");
+            apellido = extra.getString("direccion");
+            telefono = extra.getString("telefono");
+            infPers = nombre + "," + apellido + "," + telefono;
+
+        }else{
+            listaCompra = (ArrayList<Producto>) extra.getSerializable("ArrayProducto");//Esto faltaba
+            infPers = extra.getString("infPers");
+
+        }
+
 
         spTamaño = (Spinner) findViewById(R.id.spTamaño);
         spTipo = (Spinner) findViewById(R.id.spTipo);
@@ -70,6 +85,7 @@ public class Pedido extends Activity {
         spHuevo.setAdapter(adapHuevo);
 
 
+
         btnAñadir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +100,7 @@ public class Pedido extends Activity {
                 next(infPers);
             }
         });
+
         spTipo.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(
@@ -91,6 +108,10 @@ public class Pedido extends Activity {
                         if(edtCantidad.getText().equals("")){
                             edtCantidad.setText("1");
                             ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
+                        }
+                        else{
+                            ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
+
                         }
                     }
 
@@ -105,6 +126,9 @@ public class Pedido extends Activity {
                         if(edtCantidad.getText().equals("")){
                             edtCantidad.setText("1");
                             ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
+                        }else{
+                            ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
+
                         }
                     }
 
@@ -119,6 +143,9 @@ public class Pedido extends Activity {
                         if(edtCantidad.getText().equals("")){
                          edtCantidad.setText("1");
                             ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
+                        }else{
+                            ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
+
                         }
                     }
 
@@ -126,9 +153,16 @@ public class Pedido extends Activity {
 
                     }
                 });
+        btnSalir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAffinity();
+            }
+        });
 
 
     }
+
 
     private void Añadir() {
         if (validarDatos()) {

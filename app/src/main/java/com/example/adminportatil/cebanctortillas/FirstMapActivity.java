@@ -1,6 +1,8 @@
 package com.example.adminportatil.cebanctortillas;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -23,6 +25,7 @@ public class FirstMapActivity extends AppCompatActivity implements OnMapReadyCal
     private FirstMapFragment mFirstMapFragment;
     private Button inicio;
     private Button llamar;
+    private Button informacion;
     //test
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class FirstMapActivity extends AppCompatActivity implements OnMapReadyCal
 
         inicio = (Button) findViewById(R.id.btnInicio);
         llamar = (Button) findViewById(R.id.btnLlamar);
+        informacion = (Button) findViewById(R.id.btnInfo);
 
 
         mFirstMapFragment = FirstMapFragment.newInstance();
@@ -57,6 +61,24 @@ public class FirstMapActivity extends AppCompatActivity implements OnMapReadyCal
                 realizarLlamada(null);
             }
         });
+        informacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                msbox("Información:", "Realizado por Igor Borrezo y Haritz Orcaray");
+            }
+        });
+    }
+    public void msbox(String str,String str2)
+    {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setTitle(str);
+        dlgAlert.setMessage(str2);
+        dlgAlert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
     }
 
 

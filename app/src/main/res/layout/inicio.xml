@@ -42,8 +42,9 @@
         android:layout_marginBottom="34dp"
         android:id="@+id/btnInfo"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/btnLlamar"
-        android:layout_toStartOf="@+id/btnLlamar" />
+        android:layout_toStartOf="@+id/btnLlamar"
+        android:gravity="center"
+        android:foregroundGravity="center" />
 
     <Button
         android:text="@string/btnInicio"

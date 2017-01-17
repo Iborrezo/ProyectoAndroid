@@ -9,14 +9,14 @@
         android:orientation="horizontal"
         android:layout_weight="1"
         android:layout_width="wrap_content"
-        android:layout_height="300dp">
+        android:layout_height="500dp">
 
         <ListView
 
             android:id="@+id/lvResultadoDesc"
             android:layout_width="300dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:textSize="8sp"
             android:layout_weight="1" />
 
@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:id="@+id/lvlResultadoCant"
             android:touchscreenBlocksFocus="false"
-            android:layout_height="300dp">
+            android:layout_height="wrap_content">
 
         </ListView>
     </LinearLayout>
@@ -52,10 +52,15 @@
     </LinearLayout>
 
     <TextView
-        android:text="TextView"
         android:layout_width="match_parent"
         android:id="@+id/txtResultadoo"
         android:layout_height="50dp" />
+
+    <TextView
+        android:text="@string/editeSuPedido"
+        android:layout_width="match_parent"
+        android:id="@+id/editeSuPedido"
+        android:layout_height="48dp" />
 
     <LinearLayout
         android:orientation="horizontal"

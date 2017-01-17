@@ -87,7 +87,7 @@
         android:text="@string/btnSalir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/btnSalir"
+        android:id="@+id/btnSalir0"
         android:layout_alignBaseline="@+id/btnSiguiente"
         android:layout_alignBottom="@+id/btnSiguiente"
         android:layout_alignRight="@+id/edtNombre"

@@ -23,8 +23,10 @@ public class Registro extends AppCompatActivity {
         nombre=(EditText) findViewById(R.id.edtNombre);
         direccion=(EditText) findViewById(R.id.edtDireccion);
         telefono=(EditText) findViewById(R.id.edtTelefono);
-        salir=(Button) findViewById(R.id.btnSalir);
+        salir=(Button) findViewById(R.id.btnSalir0);
         siguiente=(Button) findViewById(R.id.btnSiguiente);
+        nombre.requestFocus();
+
 
         siguiente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +48,7 @@ public class Registro extends AppCompatActivity {
         salir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finishAffinity();
 
             }
         });

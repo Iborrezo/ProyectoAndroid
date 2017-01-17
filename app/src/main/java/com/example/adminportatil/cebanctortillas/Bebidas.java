@@ -13,11 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class Bebidas extends Activity {
-    void showToast(CharSequence msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
 
     private Spinner spBebida;
     private EditText edtCantidad;
@@ -27,6 +25,7 @@ public class Bebidas extends Activity {
     private TextView txtPrecio;
     ArrayList<Producto> listaCompra;
     private Toast toast1;
+    private String infPers;
 
     final double prBebidas[] = {0, 2, 1.75, 1.75, 2.20, 2.50, 1};
 
@@ -36,8 +35,8 @@ public class Bebidas extends Activity {
         setContentView(R.layout.activity_bebidas);
 
         Bundle extra = getIntent().getExtras();
-        final String infPers = extra.getString("infPers");
-        listaCompra = (ArrayList<Producto>) extra.getSerializable("ArrayProducto");
+        infPers = extra.getString("infPers");
+            listaCompra = (ArrayList<Producto>) extra.getSerializable("ArrayProducto");
 
         spBebida = (Spinner) findViewById(R.id.spBebida);
         edtCantidad = (EditText) findViewById(R.id.edtCantidad2);
@@ -46,7 +45,7 @@ public class Bebidas extends Activity {
         btnSiguiente = (Button) findViewById(R.id.btnSiguiente3);
         btnSiguiente = (Button) findViewById(R.id.btnSiguiente3);
         txtPrecio = (TextView) findViewById(R.id.txtPrecio);
-        edtCantidad.setText("0");
+        edtCantidad.setText("1");
 
         String[] bebidas = {"Seleccione una Bebida", "Cocacola", "Kas Limon", "Kas Naranja", "Nestea", "Cerveza", "Agua"};
         ArrayAdapter<String> adapBebidas = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, bebidas);
@@ -79,13 +78,20 @@ public class Bebidas extends Activity {
             }
         });
 
+        btnSalir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAffinity();
+            }
+        });
+
     }
+
 
     private void añadir() {
         if(spBebida.getSelectedItemPosition()>0){
             if(edtCantidad.getText().toString().equals("") || Integer.parseInt(edtCantidad.getText().toString()) == 0){
-                toast1 = Toast.makeText(getApplicationContext(), "La cantidad tiene que ser superior a 0", Toast.LENGTH_SHORT);
-                toast1.show();
+
         }
              else{
                 String descripcion;
@@ -112,6 +118,15 @@ public class Bebidas extends Activity {
         Intent i = new Intent(this, Resumen.class);
         i.putExtra("ArrayProducto", listaCompra);
         i.putExtra("infPers", infPers);
-        startActivity(i);
+        startActivityForResult(i,1);
+    }
+    public void onBackPressed() {
+        boolean vuelta = true;
+        Intent intent = new Intent(this, Pedido.class);
+        intent.putExtra("ArrayProducto", listaCompra);
+        intent.putExtra("infPers", infPers);
+        intent.putExtra("vuelta", vuelta);
+        startActivity(intent);
+
     }
 }
