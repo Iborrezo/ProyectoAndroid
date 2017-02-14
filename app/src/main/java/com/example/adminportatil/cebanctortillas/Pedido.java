@@ -3,6 +3,8 @@ package com.example.adminportatil.cebanctortillas;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Pedido extends Activity {
@@ -23,17 +26,11 @@ public class Pedido extends Activity {
     private Button btnSalir;
     private Button btnSiguiente;
     private EditText edtCantidad;
-    private TextView txtTamaño;
-    private TextView txtTipo;
-    private TextView txtHuevo;
     private TextView txtCantidadTot;
     private Toast toast1;
     private boolean vuelta = false;
     private String infPers;
-
-    final int prTamaño[] = {0, 5, 9};
-    final double prTipo[] = {0, 3, 2, 2.5, 4, 3.5, 3};
-    final int prHuevo[] = {0, 1, 2, 3};
+    String nombre = "";
 
     ArrayList<Producto> listaCompra = new ArrayList<Producto>();
 
@@ -42,19 +39,19 @@ public class Pedido extends Activity {
         setContentView(R.layout.activity_pedido);
         String telefono;
         String apellido;
-        String nombre;
+
         Bundle extra = getIntent().getExtras();
         vuelta = extra.getBoolean("vuelta");
 
-        if (vuelta==false){
+        if (vuelta == false) {
 
             nombre = extra.getString("nombre");
             apellido = extra.getString("direccion");
             telefono = extra.getString("telefono");
             infPers = nombre + "," + apellido + "," + telefono;
 
-        }else{
-            listaCompra = (ArrayList<Producto>) extra.getSerializable("ArrayProducto");//Esto faltaba
+        } else {
+            listaCompra = (ArrayList<Producto>) extra.getSerializable("ArrayProducto");
             infPers = extra.getString("infPers");
 
         }
@@ -67,23 +64,55 @@ public class Pedido extends Activity {
         btnSalir = (Button) findViewById(R.id.btnSalir);
         btnSiguiente = (Button) findViewById(R.id.btnSiguiente);
         edtCantidad = (EditText) findViewById(R.id.edtCantidad);
-        txtTamaño = (TextView) findViewById(R.id.txtTamaño);
-        txtTipo = (TextView) findViewById(R.id.txtTipo);
-        txtHuevo = (TextView) findViewById(R.id.txtHuevo);
         txtCantidadTot = (TextView) findViewById(R.id.txtCantidadTot);
 
-        String[] tamaño = {"Seleccione un tamaño", "Individual", "Familiar"};
+        TortillasDb basedatos = new TortillasDb(this, "TortillasDb", null, 1);
+        SQLiteDatabase db = basedatos.getWritableDatabase();
+        String[] args = new String[]{"0"};
+        Cursor c = db.rawQuery("SELECT DISTINCT descripcion FROM productos WHERE soluble=?", args);
+
+        ArrayList<String> tamaño = new ArrayList<String>();
+        ArrayList<String> tipo = new ArrayList<String>();
+        ArrayList<String> huevo = new ArrayList<String>();
+        tamaño.add("Seleccione un tamaño");
+        tipo.add("Seleccione un ingrediente principal");
+        huevo.add("Seleccione un tipo de huevo");
+        if(c.moveToFirst()){
+            do{
+                String [] desc = c.getString(0).split(",");
+                if(tamaño.contains(desc[1])){
+
+                }else{
+                    tamaño.add(desc[1]);
+                }
+                if(tipo.contains(desc[0])){
+
+                }else{
+                    tipo.add(desc[0]);
+                }
+                if(huevo.contains(desc[2])){
+
+                }else{
+                    huevo.add(desc[2]);
+                }
+
+
+
+            }while(c.moveToNext());
+        }
+        c.close();
+        db.close();
+
+
         ArrayAdapter<String> adapTamaño = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tamaño);
-        String[] tipo = {"Seleccione un tipo", "Patata", "Verduras", "Bacalao", "Jamón Ibérico", "Queso Idiazabal", "Hongos"};
-        ArrayAdapter<String> adapTipo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipo);
-        String[] huevo = {"Seleccione un tipo de huevo", "Granja", "Campero", "Ecológico"};
-        ArrayAdapter<String> adapHuevo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, huevo);
+
+         ArrayAdapter<String> adapTipo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tipo);
+           ArrayAdapter<String> adapHuevo = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, huevo);
 
 
         spTamaño.setAdapter(adapTamaño);
-        spTipo.setAdapter(adapTipo);
-        spHuevo.setAdapter(adapHuevo);
-
+         spTipo.setAdapter(adapTipo);
+            spHuevo.setAdapter(adapHuevo);
 
 
         btnAñadir.setOnClickListener(new View.OnClickListener() {
@@ -105,11 +134,10 @@ public class Pedido extends Activity {
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(
                             AdapterView<?> parent, View view, int position, long id) {
-                        if(edtCantidad.getText().equals("")){
+                        if (edtCantidad.getText().equals("")) {
                             edtCantidad.setText("1");
                             ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
-                        }
-                        else{
+                        } else {
                             ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
 
                         }
@@ -123,10 +151,10 @@ public class Pedido extends Activity {
                 new AdapterView.OnItemSelectedListener() {
                     public void onItemSelected(
                             AdapterView<?> parent, View view, int position, long id) {
-                        if(edtCantidad.getText().equals("")){
+                        if (edtCantidad.getText().equals("")) {
                             edtCantidad.setText("1");
                             ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
-                        }else{
+                        } else {
                             ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
 
                         }
@@ -160,21 +188,18 @@ public class Pedido extends Activity {
             }
         });
 
-
     }
 
 
     private void Añadir() {
         if (validarDatos()) {
+            ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
             String tipo = spTipo.getSelectedItem().toString();
             String tamaño = spTamaño.getSelectedItem().toString();
             String huevo = spHuevo.getSelectedItem().toString();
             int cantidad = Integer.parseInt(edtCantidad.getText().toString());
-            ActualizarPrecio(cantidad);
-            double precio;
-            String descripcion;
-            precio = CalcularPrecio();
-            descripcion = (tipo + "," + tamaño + "," + huevo);
+            String descripcion = (tipo + "," + tamaño + "," + huevo);
+            Double precio = Double.parseDouble(txtCantidadTot.getText().toString());
             listaCompra.add(new Producto(precio, cantidad, descripcion));
 
             toast1 = Toast.makeText(getApplicationContext(), "Se ha añadido " + cantidad + " tortilla/s de: " + tipo + " con huevos '" + huevo + "' de tamaño: " + tamaño + ".", Toast.LENGTH_SHORT);
@@ -184,23 +209,36 @@ public class Pedido extends Activity {
     }
 
     private void ActualizarPrecio(int cantidad) {
-        int precio1 = prTamaño[spTamaño.getSelectedItemPosition()];
-        double precio2 = prTipo[spTipo.getSelectedItemPosition()];
-        int precio3 = prHuevo[spHuevo.getSelectedItemPosition()];
-        txtTamaño.setText(String.valueOf(precio1) + "€");
-        txtTipo.setText(String.valueOf(precio2) + "€");
-        txtHuevo.setText(String.valueOf(precio3) + "€");
-        txtCantidadTot.setText(String.valueOf((precio1 + precio2 + precio3) * cantidad) + "€");
+//        int precio1 = prTamaño[spTamaño.getSelectedItemPosition()];
+//        double precio2 = prTipo[spTipo.getSelectedItemPosition()];
+//        int precio3 = prHuevo[spHuevo.getSelectedItemPosition()];
+//        txtTamaño.setText(String.valueOf(precio1) + "€");
+//        txtTipo.setText(String.valueOf(precio2) + "€");
+//        txtHuevo.setText(String.valueOf(precio3) + "€");
+//        txtCantidadTot.setText(String.valueOf((precio1 + precio2 + precio3) * cantidad) + "€");
+
+        TortillasDb basedatos = new TortillasDb(this, "TortillasDb", null, 1);
+        SQLiteDatabase db = basedatos.getWritableDatabase();
+
+
+        String textoTamaño = spTamaño.getSelectedItem().toString();
+        String textoTipo = spTipo.getSelectedItem().toString();
+        String textoHuevo = spHuevo.getSelectedItem().toString();
+        String cadena = textoTipo+","+textoTamaño+","+textoHuevo;
+
+        String[] args = new String[]{cadena};
+        Cursor test = db.rawQuery("SELECT precio FROM productos WHERE descripcion=?", args);
+        if(test.moveToFirst()){
+            Double precio = test.getDouble(0);
+            txtCantidadTot.setText(precio.toString());
+        }
+
+
+
+
 
     }
 
-    private Double CalcularPrecio() {
-        int precio1 = prTamaño[spTamaño.getSelectedItemPosition()];
-        double precio2 = prTipo[spTipo.getSelectedItemPosition()];
-        int precio3 = prHuevo[spHuevo.getSelectedItemPosition()];
-        return (precio1 + precio2 + precio3);
-
-    }
 
     private void next(String infPers) {
         Intent i = new Intent(this, Bebidas.class);
@@ -212,30 +250,31 @@ public class Pedido extends Activity {
     }
 
     private boolean validarDatos() {
-        if(spTamaño.getSelectedItemPosition()>0){
-            if(spHuevo.getSelectedItemPosition()>0){
-                if (spTipo.getSelectedItemPosition()>0){
-                    if (edtCantidad.getText().toString().equals("") || Integer.parseInt(edtCantidad.getText().toString())==0){
+        if (spTamaño.getSelectedItemPosition() > 0) {
+            if (spHuevo.getSelectedItemPosition() > 0) {
+                if (spTipo.getSelectedItemPosition() > 0) {
+                    if (edtCantidad.getText().toString().equals("") || Integer.parseInt(edtCantidad.getText().toString()) == 0) {
                         toast1 = Toast.makeText(getApplicationContext(), "La cantidad tiene que ser superior a 0", Toast.LENGTH_SHORT);
                         toast1.show();
                         return false;
-                    }else{
+                    } else {
                         return true;
                     }
-                }else{
+                } else {
                     toast1 = Toast.makeText(getApplicationContext(), "Seleccione un ingrediente principal", Toast.LENGTH_SHORT);
                     toast1.show();
                     return false;
                 }
-            }else{
+            } else {
                 toast1 = Toast.makeText(getApplicationContext(), "Seleccione un tipo de huevo", Toast.LENGTH_SHORT);
                 toast1.show();
                 return false;
             }
-        }else{
+        } else {
             toast1 = Toast.makeText(getApplicationContext(), "Seleccione un tamaño", Toast.LENGTH_SHORT);
             toast1.show();
             return false;
         }
     }
+
 }

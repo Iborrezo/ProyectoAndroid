@@ -20,12 +20,6 @@
                 android:layout_weight="1.00"
                 android:layout_height="100dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:gravity="center_vertical"
-                android:id="@+id/txtTamaño"
-                android:text="0€"
-                android:layout_height="100dp" />
         </TableRow>
 
         <TableRow
@@ -38,12 +32,6 @@
                 android:layout_weight="1"
                 android:id="@+id/spHuevo" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:gravity="center_vertical"
-                android:id="@+id/txtHuevo"
-                android:text="0€" />
         </TableRow>
 
         <TableRow
@@ -56,12 +44,6 @@
                 android:layout_weight="1"
                 android:id="@+id/spTipo" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:gravity="center_vertical"
-                android:id="@+id/txtTipo"
-                android:text="0€" />
         </TableRow>
 
     </TableLayout>

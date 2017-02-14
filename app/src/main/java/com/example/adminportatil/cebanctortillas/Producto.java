@@ -13,6 +13,9 @@ public class Producto implements Serializable{
         this.cantidad=cantidad;
         this.descripcion= descripcion;
     }
+    Producto(String descripcion){
+        this.descripcion = descripcion;
+    }
     public String getDescripcion(){
         return descripcion;
     }

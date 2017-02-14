@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.MatrixCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class Resumen extends Activity {
@@ -30,6 +33,7 @@ public class Resumen extends Activity {
     private Button btnCancelar;
     private TextView txtResultadoo;
     ArrayList<Producto> listaCompra;
+    private Button btnMostrarPedidos;
     String infPers;
     double precioTotal = 0;
 
@@ -48,6 +52,7 @@ public class Resumen extends Activity {
         btnAceptar = (Button) findViewById(R.id.btnAceptar);
         btnCancelar = (Button) findViewById(R.id.btnCancelar);
         txtResultadoo = (TextView) findViewById(R.id.txtResultadoo);
+        btnMostrarPedidos = (Button) findViewById(R.id.btnMostrarPedidos);
 
 
         listaCompra = (ArrayList<Producto>) extra.getSerializable("ArrayProducto");
@@ -104,24 +109,9 @@ public class Resumen extends Activity {
             @Override
             public void onClick(View v) {
 
-                String nombre = tratarInfPers();
-                int lineas = listaCompra.size();
-                Toast toast1;
-                calcularPrecio(lineas);
-                if(listaCompra.size()==0){
-                   msbox ("Pedido NO tramitado","Disculpe "+nombre+". Se ha producido un Error, no tiene artículos en la cesta, intentelo de nuevo ");
-                }else{
+                finalizarPedido();
 
-                    if (precioTotal >= 18) {
-                        if (precioTotal > 32) {
-                            msbox( "Pedido tramitado", "Felicidades " + nombre + " ha conseguiudo un bale para comer en Cebanc");
-                        } else {
-                            msbox("Pedido tramitado", "Felicidades " + nombre + " ha conseguiudo un peluche de regalo");
-                        }
-                    } else {
-                        msbox("Pedido tramitado", "Se ha tramitado el pedido de" + nombre);
-                    }
-                }
+
 
             }
         });
@@ -129,6 +119,12 @@ public class Resumen extends Activity {
             @Override
             public void onClick(View v) {
                 finishAffinity();
+            }
+        });
+        btnMostrarPedidos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mostrarPedidos(tratarInfPers());
             }
         });
 
@@ -184,6 +180,7 @@ public class Resumen extends Activity {
                 return view;
             }
         };
+
         ArrayAdapter<String> adapPrecios = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cantidades);
         lvResultadoDesc.setAdapter(adapDescripciones);
         lvlResultadoCant.setAdapter(adapPrecios);
@@ -205,5 +202,139 @@ public class Resumen extends Activity {
         String[] datos = infPers.split(",");
         return datos[0];
     }
+    public void finalizarPedido(){
+        TortillasDb basedatos = new TortillasDb(this, "TortillasDb", null, 1);
+        SQLiteDatabase db = basedatos.getWritableDatabase();
+
+        String nombre = tratarInfPers();
+        int lineas = listaCompra.size();
+        Toast toast1;
+        calcularPrecio(lineas);
+        Calendar c = Calendar.getInstance();
+        int date = c.get(Calendar.DATE);
+
+
+        if(listaCompra.size()==0){
+            msbox ("Pedido NO tramitado","Disculpe "+nombre+". Se ha producido un Error, no tiene artículos en la cesta, intentelo de nuevo ");
+        }else{
+
+            if (precioTotal >= 18) {
+                if (precioTotal > 32) {
+                    db.execSQL("INSERT INTO cabecera(cliente, fecha_albaran) VALUES ('"+nombre+"',"+date+")");
+                    for(int i=0;i<listaCompra.size();i++){
+                        int idcabecera=0;
+                        int prod=0;
+                        int cantidad=0;
+                        Producto pr;
+                        pr = listaCompra.get(i);
+                        String[]args2 = new String []{String.valueOf(date)};
+                        Cursor cur = db.rawQuery("SELECT idcabecera FROM cabecera WHERE fecha_albaran=?", args2);
+                        if(cur.moveToFirst()){
+                            idcabecera=cur.getInt(0);
+                        }
+
+                        String [] args = new String []{pr.getDescripcion()};
+                        cantidad = pr.getCantidad();
+                        Cursor miCursor = db.rawQuery("SELECT idproducto FROM productos WHERE descripcion=?", args);
+                        if (miCursor.moveToFirst()){
+                            prod = miCursor.getInt(0);
+                        }
+                        db.execSQL("INSERT INTO lineas(cabecera, producto, cantidad) VALUES('"+idcabecera+"',"+prod+","+cantidad+")");
+                    }
+                    msbox( "Pedido tramitado", "Felicidades " + nombre + " ha conseguiudo un bale para comer en Cebanc");
+
+
+
+                } else {
+                    db.execSQL("INSERT INTO cabecera(cliente, fecha_albaran) VALUES ('"+nombre+"',"+date+")");
+                    for(int i=0;i<listaCompra.size();i++){
+                        int idcabecera=0;
+                        int prod=0;
+                        int cantidad=0;
+                        Producto pr;
+                        pr = listaCompra.get(i);
+                        String[]args2 = new String []{String.valueOf(date)};
+                        Cursor cur = db.rawQuery("SELECT idcabecera FROM cabecera WHERE fecha_albaran=?", args2);
+                        if(cur.moveToFirst()){
+                            idcabecera=cur.getInt(0);
+                        }
+
+                        String [] args = new String []{pr.getDescripcion()};
+                        cantidad = pr.getCantidad();
+                        Cursor miCursor = db.rawQuery("SELECT idproducto FROM productos WHERE descripcion=?", args);
+                        if (miCursor.moveToFirst()){
+                            prod = miCursor.getInt(0);
+                        }
+                        db.execSQL("INSERT INTO lineas(cabecera, producto, cantidad) VALUES('"+idcabecera+"',"+prod+","+cantidad+")");
+                    }
+                    msbox("Pedido tramitado", "Felicidades " + nombre + " ha conseguiudo un peluche de regalo");
+                }
+            } else {
+                db.execSQL("INSERT INTO cabecera(cliente, fecha_albaran) VALUES ('"+nombre+"',"+date+")");
+                for(int i=0;i<listaCompra.size();i++){
+                    int idcabecera=0;
+                    int prod=0;
+                    int cantidad=0;
+                    Producto pr;
+                    pr = listaCompra.get(i);
+                    String[]args2 = new String []{String.valueOf(date)};
+                    Cursor cur = db.rawQuery("SELECT idcabecera FROM cabecera WHERE fecha_albaran=?", args2);
+                    if(cur.moveToFirst()){
+                        idcabecera=cur.getInt(0);
+                    }
+
+                    String [] args = new String []{pr.getDescripcion()};
+                    cantidad = pr.getCantidad();
+                    Cursor miCursor = db.rawQuery("SELECT idproducto FROM productos WHERE descripcion=?", args);
+                    if (miCursor.moveToFirst()){
+                        prod = miCursor.getInt(0);
+                    }
+                    db.execSQL("INSERT INTO lineas(cabecera, producto, cantidad) VALUES('"+idcabecera+"',"+prod+","+cantidad+")");
+                }
+                msbox("Pedido tramitado", "Se ha tramitado el pedido de" + nombre);
+            }
+        }
+    }
+    private void mostrarPedidos(String nombre){
+        int idCabecera = 0;
+        double precioTot = 0;
+        boolean contiene = false;
+        String cadena = "Pedidos de "+nombre+":\n";
+        TortillasDb basedatos = new TortillasDb(this, "TortillasDb", null, 1);
+        SQLiteDatabase db = basedatos.getWritableDatabase();
+        String [] args0 = new String []{nombre};
+        Cursor c = db.rawQuery("SELECT idcabecera FROM cabecera WHERE cliente='?'", args0);
+        if(c.moveToFirst()){
+            idCabecera = c.getInt(0);
+            contiene = true;
+        }
+        if (contiene == true){
+            String [] args = new String []{String.valueOf(idCabecera)};
+            c = db.rawQuery("SELECT lineas.cabecera, productos.precio, lineas.cantidad FROM productos, lineas WHERE productos.idproducto=lineas.producto AND cabecera=?", args);
+            if(c.moveToFirst()){
+                do{
+
+                    int cabecera = c.getInt(0);
+                    Double precio = c.getDouble(1);
+                    int cantidad = c.getInt(2);
+
+                    if (idCabecera==cabecera){
+                        precioTot = precio*cantidad;
+                    }else{
+                        cadena = "Pedido: "+idCabecera+" tiene un total de "+precioTot+"€ \n";
+                    }
+
+
+                }while(c.moveToNext());
+
+
+            }
+            msbox("Detalles",cadena);
+
+        }
+
+    }
+
+
 
 }

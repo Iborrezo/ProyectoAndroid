@@ -59,18 +59,6 @@
         android:layout_toEndOf="@+id/txtDireccion"
         android:hint="@string/edtDireccion" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/edtTelefono"
-        android:layout_alignBaseline="@+id/txtTelefono"
-        android:layout_alignBottom="@+id/txtTelefono"
-        android:layout_toRightOf="@+id/txtTelefono"
-        android:layout_toEndOf="@+id/txtTelefono"
-        android:hint="@string/edtTelefono" />
-
     <Button
         android:text="@string/btnSiguiente"
         android:layout_width="wrap_content"
@@ -108,4 +96,26 @@
         android:layout_marginLeft="11dp"
         android:layout_marginStart="11dp"
         android:hint="@string/edtNombre" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/edtTelefono"
+        android:hint="@string/edtTelefono"
+        android:layout_alignBaseline="@+id/txtTelefono"
+        android:layout_alignBottom="@+id/txtTelefono"
+        android:layout_toRightOf="@+id/txtNombre"
+        android:layout_toEndOf="@+id/txtNombre" />
+
+    <Button
+        android:text="Buscar Cliente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:id="@+id/btnBuscarCliente"
+        android:layout_below="@+id/btnSiguiente"
+        android:layout_alignLeft="@+id/edtNombre"
+        android:layout_alignStart="@+id/edtNombre" />
 </RelativeLayout>

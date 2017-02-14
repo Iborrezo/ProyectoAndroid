@@ -1,6 +1,11 @@
 package com.example.adminportatil.cebanctortillas;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.BoolRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,39 +14,43 @@ import android.widget.EditText;
 
 public class Registro extends AppCompatActivity {
 
-    private EditText nombre;
-    private EditText direccion;
-    private EditText telefono;
+    private EditText edtnombre;
+    private EditText edtdireccion;
+    private EditText edttelefono;
     private Button salir;
     private Button siguiente;
+    private Button btnBuscarCliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        nombre=(EditText) findViewById(R.id.edtNombre);
-        direccion=(EditText) findViewById(R.id.edtDireccion);
-        telefono=(EditText) findViewById(R.id.edtTelefono);
+
+
+
+
+        edtnombre =(EditText) findViewById(R.id.edtNombre);
+        edtdireccion =(EditText) findViewById(R.id.edtDireccion);
+        edttelefono =(EditText) findViewById(R.id.edtTelefono);
         salir=(Button) findViewById(R.id.btnSalir0);
         siguiente=(Button) findViewById(R.id.btnSiguiente);
-        nombre.requestFocus();
-
+        btnBuscarCliente=(Button)findViewById(R.id.btnBuscarCliente);
+        edtnombre.requestFocus();
 
         siguiente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (nombre.getText().toString().equals("")) {
-                    nombre.setError("No ha introducido el nombre");
-                }else if (direccion.getText().toString().equals("")) {
-                    direccion.setError("No ha introducido la direccion");
-                }else if (telefono.getText().toString().equals("")) {
-                    telefono.setError("No ha introducido la direccion");
+                if (edtnombre.getText().toString().equals("")) {
+                    edtnombre.setError("No ha introducido el edtnombre");
+                }else if (edtdireccion.getText().toString().equals("")) {
+                    edtdireccion.setError("No ha introducido la edtdireccion");
+                }else if (edttelefono.getText().toString().equals("")) {
+                    edttelefono.setError("No ha introducido el edttelefono");
                 } else{
-                        recogerDatos(null);
+                        start();
                 }
-
             }
         });
 
@@ -52,15 +61,70 @@ public class Registro extends AppCompatActivity {
 
             }
         });
+        btnBuscarCliente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buscarCliente();
+            }
+        });
+
+    }
+    public void msbox(String str,String str2)
+    {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setTitle(str);
+        dlgAlert.setMessage(str2);
+        dlgAlert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
     }
 
     //Recogiendo los datos de la pestaña REGISTRO para lkuego poder imprimir
-    public void recogerDatos(View view){
+    public void recogerDatos(){
+
+
+
+
+    }
+    public void start(){
+        TortillasDb basedatos = new TortillasDb(this, "TortillasDb", null, 1);
+        SQLiteDatabase db = basedatos.getWritableDatabase();
+
+        String[]args = new String []{edtnombre.getText().toString()};
+        Cursor c = db.rawQuery("SELECT nombre, direccion, telefono FROM clientes WHERE nombre=?",args);
+        if(c.moveToFirst()==false){
+            db.execSQL("INSERT INTO clientes(nombre, direccion, telefono) VALUES('"+edtnombre.getText().toString()+"', '"+edtdireccion.getText().toString()+"', '"+edttelefono.getText().toString()+"')");
+        }
+        db.close();
+
+
         Intent registro=new Intent(this, Pedido.class);
-        registro.putExtra("nombre", nombre.getText().toString());
-        registro.putExtra("direccion", direccion.getText().toString());
-        registro.putExtra("telefono", telefono.getText().toString());
+        registro.putExtra("nombre", edtnombre.getText().toString());
+        registro.putExtra("direccion", edtdireccion.getText().toString());
+        registro.putExtra("telefono", edttelefono.getText().toString());
         startActivity(registro);
+    }
+    private void buscarCliente(){
+        TortillasDb basedatos = new TortillasDb(this, "TortillasDb", null, 1);
+        SQLiteDatabase db = basedatos.getWritableDatabase();
+
+        String[]args = new String []{edtnombre.getText().toString()};
+        Cursor c = db.rawQuery("SELECT nombre, direccion, telefono FROM clientes WHERE nombre=?",args);
+        if (c.moveToFirst()){
+            String nombre = c.getString(0);
+            String direccion = c.getString(1);
+            String telefono = c.getString(2);
+            edtdireccion.setText(direccion);
+            edttelefono.setText(telefono);
+            db.close();
+
+        }else{
+            msbox("NO EXISTE", "El nombre del cliente introducido no se encuentra en la Base de Datos");
+
+        }
 
     }
 }

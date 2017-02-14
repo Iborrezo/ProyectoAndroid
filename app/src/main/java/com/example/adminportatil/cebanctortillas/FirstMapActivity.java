@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -67,6 +68,9 @@ public class FirstMapActivity extends AppCompatActivity implements OnMapReadyCal
                 msbox("Información:", "Realizado por Igor Borrezo y Haritz Orcaray");
             }
         });
+
+        TortillasDb basedatos = new TortillasDb(this, "TortillasDb", null, 1);
+        SQLiteDatabase db = basedatos.getWritableDatabase();
     }
     public void msbox(String str,String str2)
     {
@@ -119,8 +123,5 @@ public class FirstMapActivity extends AppCompatActivity implements OnMapReadyCal
         }
         startActivity(llamada);
     }
+
 }
-
-
-
-
