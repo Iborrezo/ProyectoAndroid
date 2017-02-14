@@ -2,6 +2,8 @@ package com.example.adminportatil.cebanctortillas;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -118,7 +120,14 @@ public class Pedido extends Activity {
         btnAñadir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Añadir();
+                try{
+                    Añadir();
+
+                }catch (Exception e){
+                    msbox("Error", "El producto seleccionado ya no está disponible.");
+
+                }
+
             }
         });
 
@@ -189,9 +198,21 @@ public class Pedido extends Activity {
         });
 
     }
+    public void msbox(String str,String str2)
+    {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setTitle(str);
+        dlgAlert.setMessage(str2);
+        dlgAlert.setPositiveButton("OK",new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
+    }
 
 
-    private void Añadir() {
+    private void Añadir() throws Exception{
         if (validarDatos()) {
             ActualizarPrecio(Integer.parseInt(edtCantidad.getText().toString()));
             String tipo = spTipo.getSelectedItem().toString();

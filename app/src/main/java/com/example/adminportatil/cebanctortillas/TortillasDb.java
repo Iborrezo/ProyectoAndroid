@@ -38,12 +38,6 @@ public class TortillasDb extends SQLiteOpenHelper {
             db.execSQL("INSERT INTO productos(soluble, descripcion, precio) VALUES(1,'Cerveza',2.5)");
             db.execSQL("INSERT INTO productos(soluble, descripcion, precio) VALUES(1,'Agua',1)");
             db.execSQL("INSERT INTO clientes(nombre, direccion, telefono) VALUES('Igor', 'Amara', '123')");
-            db.execSQL("INSERT INTO productos(soluble, descripcion, precio) VALUES(1,'Agua',1)");
-            db.execSQL("INSERT INTO productos(soluble, descripcion, precio) VALUES(1,'test',10)");
-            db.execSQL("INSERT INTO productos(soluble, descripcion, precio) VALUES(0,'TEST,TEST,TEST',100)");
-
-
-
         }
 
         @Override

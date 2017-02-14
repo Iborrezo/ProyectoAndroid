@@ -27,15 +27,17 @@ public class FirstMapActivity extends AppCompatActivity implements OnMapReadyCal
     private Button inicio;
     private Button llamar;
     private Button informacion;
+    private Button btnMantenimiento;
     //test
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inicio);
 
-        inicio = (Button) findViewById(R.id.btnInicio);
+        inicio = (Button) findViewById(R.id.btnInicio);;
         llamar = (Button) findViewById(R.id.btnLlamar);
         informacion = (Button) findViewById(R.id.btnInfo);
+        btnMantenimiento = (Button) findViewById(R.id.btnMantenimiento);
 
 
         mFirstMapFragment = FirstMapFragment.newInstance();
@@ -66,6 +68,14 @@ public class FirstMapActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onClick(View v) {
                 msbox("Información:", "Realizado por Igor Borrezo y Haritz Orcaray");
+            }
+        });
+        btnMantenimiento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lanzarMantenimiento();
+
+
             }
         });
 
@@ -122,6 +132,10 @@ public class FirstMapActivity extends AppCompatActivity implements OnMapReadyCal
             return;
         }
         startActivity(llamada);
+    }
+    private void lanzarMantenimiento(){
+        Intent mantenimiento = new Intent(this, Mantenimiento.class);
+        startActivity(mantenimiento);
     }
 
 }

@@ -39,6 +39,7 @@
 
         <activity android:name=".Bebidas"/>
         <activity android:name=".Resumen"/>
+        <activity android:name=".Mantenimiento"/>
 
     </application>
 
